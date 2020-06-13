@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a91dfe07-9efb-443e-86d2-7bc4b8b0ed74" name="apache server local" url="http://192.168.0.10">
+        <fileTransfer rootFolder="/my-appointments" host="192.168.0.10" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
