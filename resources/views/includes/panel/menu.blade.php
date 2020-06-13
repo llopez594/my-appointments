@@ -1,26 +1,65 @@
 <!-- Navigation -->
-<h6 class="navbar-heading text-muted">Gestionar datos</h6>
+@if(Auth::user()->role == 'admin')
+    <h6 class="navbar-heading text-muted">Gestionar datos</h6>
+@else
+    Menu
+@endif
 <ul class="navbar-nav">
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url('/home') }}">
-            <i class="ni ni-tv-2 text-red"></i> Dashboard
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url('specialties') }}">
-            <i class="ni ni-planet text-blue"></i> Especialidades
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url('doctors') }}">
-            <i class="ni ni-pin-3 text-orange"></i> Medicos
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url('patients') }}">
-            <i class="ni ni-satisfied text-info"></i> Pacientes
-        </a>
-    </li>
+    @if(Auth::user()->role == 'admin')
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('/home') }}">
+                <i class="ni ni-tv-2 text-red"></i> Dashboard
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('specialties') }}">
+                <i class="ni ni-planet text-blue"></i> Especialidades
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('doctors') }}">
+                <i class="ni ni-pin-3 text-orange"></i> Medicos
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('patients') }}">
+                <i class="ni ni-satisfied text-info"></i> Pacientes
+            </a>
+        </li>
+    @elseif(Auth::user()->role == 'doctor')
+        {{--<li class="nav-item">
+            <a class="nav-link" href="{{ url('/home') }}">
+                <i class="ni ni-tv-2 text-red"></i> Dashboard
+            </a>
+        </li>--}}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('specialties') }}">
+                <i class="ni ni-calendar-grid-58 text-danger"></i> Gestionar horario
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('patients') }}">
+                <i class="ni ni-time-alarm text-primary"></i> Mis Citas
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('patients') }}">
+                <i class="ni ni-satisfied text-info"></i> Mis Pacientes
+            </a>
+        </li>
+    @else {{-- patients --}}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('specialties') }}">
+                <i class="ni ni-send text-danger"></i> Mis Citas
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('patients') }}">
+                <i class="ni ni-time-alarm text-primary"></i> Reservar citas
+            </a>
+        </li>
+    @endif
+
     {{--<li class="nav-item">
         <a class="nav-link" href="./examples/tables.html">
             <i class="ni ni-bullet-list-67 text-red"></i> Horarios
@@ -37,6 +76,7 @@
         </form>
     </li>
 </ul>
+@if(Auth::user()->role == 'admin')
 <!-- Divider -->
 <hr class="my-3">
 <!-- Heading -->
@@ -54,3 +94,4 @@
         </a>
     </li>
 </ul>
+@endif
