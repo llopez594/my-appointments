@@ -14,6 +14,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        // 1
         DB::table('users')->insert([
             'name' => 'Luis Lopez',
             'email' => 'luis12l@hotmail.com',
@@ -25,6 +26,21 @@ class UsersTableSeeder extends Seeder
             'role' => 'admin'
         ]);
 
+        // 2
+        User::create([
+            'name' => 'Paciente Test',
+            'email' => 'patient@example.com',
+            'password' => Hash::make('1234'),
+            'role' => 'patient'
+        ]);
+
+        // 3
+        User::create([
+            'name' => 'Médico Test',
+            'email' => 'doctor@example.com',
+            'password' => Hash::make('1234'),
+            'role' => 'doctor'
+        ]);
         factory(User::class, 50)->create();
     }
 }
