@@ -33,7 +33,7 @@
             </a>
         </li>--}}
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('specialties') }}">
+            <a class="nav-link" href="{{ url('schedule') }}">
                 <i class="ni ni-calendar-grid-58 text-danger"></i> Gestionar horario
             </a>
         </li>
@@ -49,13 +49,13 @@
         </li>
     @else {{-- patients --}}
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('specialties') }}">
-                <i class="ni ni-send text-danger"></i> Mis Citas
+            <a class="nav-link" href="{{ url('appointments/create') }}">
+                <i class="ni ni-send text-danger"></i> Reservar citas
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ url('patients') }}">
-                <i class="ni ni-time-alarm text-primary"></i> Reservar citas
+                <i class="ni ni-time-alarm text-primary"></i> Mis Citas
             </a>
         </li>
     @endif
