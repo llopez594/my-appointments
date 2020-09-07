@@ -28,8 +28,9 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="name">Especialidad:</label>
-                    <select name="" id="" class="form-control">
+                    <label for="specialty">Especialidad:</label>
+                    <select name="specialty_id" id="specialty" class="form-control" required>
+                        <option value="">Seleccionar especialidad</option>
                         @foreach($specialties as $specialty)
                             <option value="{{ $specialty->id }}">{{ $specialty->name }}</option>
                         @endforeach
@@ -37,8 +38,8 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Medico:</label>
-                    <select name="" id="" class="form-control">
-
+                    <select name="doctor_id" id="doctor" class="form-control">
+                        {{--los doctores se cargan por AJAX--}}
                     </select>
                 </div>
                 <div class="form-group">
@@ -47,20 +48,23 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                         </div>
-                        <input name="date" class="form-control datepicker" placeholder="Seleccionar fecha" type="text" value="06/20/2020">
+                        <input name="date" class="form-control datepicker" placeholder="Seleccionar fecha"
+                               id="date" type="text" value="{{ date('Y-m-d') }}"
+                               data-date-format="yyyy-mm-dd"
+                               data-date-start-date="{{ date('Y-m-d') }}"
+                               data-date-end-date="+30d">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="address">Hora de atencion:</label>
-                    <input type="text" name="address" class="form-control" placeholder="direccion" value="{{ old('address') }}">
+                    <div id="hours">
+
+                    </div>
+{{--                    <input type="text" name="address" class="form-control" placeholder="direccion" value="{{ old('address') }}">--}}
                 </div>
                 <div class="form-group">
                     <label for="phone">Telefono / movil:</label>
                     <input type="text" name="phone" class="form-control" placeholder="telefono" value="{{ old('phone') }}">
-                </div>
-                <div class="form-group">
-                    <label for="phone">Contraseña:</label>
-                    <input type="text" name="password" class="form-control" placeholder="contraseña" value="{{ Str::random(6) }}">
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </form>
@@ -70,4 +74,5 @@
 
 @section('scripts')
     <script src="{{ asset('vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('/js/appointments/create.js') }}"></script>
 @endsection

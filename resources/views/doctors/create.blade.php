@@ -1,5 +1,9 @@
 @extends('layouts.panel')
 
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/boostrap_select.css') }}">
+@endsection
+
 @section('content')
     <div class="card shadow">
         <div class="card-header border-0">
@@ -51,9 +55,20 @@
                     <label for="phone">Contraseña:</label>
                     <input type="text" name="password" class="form-control" placeholder="contraseña" value="{{ Str::random(6) }}">
                 </div>
+                <div class="form-group">
+                    <label for="phone">Especialidades:</label>
+                    <select type="text" name="specialties[]" id="specialties" class="form-control selectpicker" title="Selecciones una o varias" data-style="btn-outline-primary" multiple>
+                        @foreach($specialties as $specialty)
+                            <option value="{{ $specialty->id }}">{{ $specialty->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </form>
         </div>
     </div>
 @endsection
 
+@section('scripts')
+    <script src="{{ asset('js/boostrap_select.js') }}"></script>
+@endsection

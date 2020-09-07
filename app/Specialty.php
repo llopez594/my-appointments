@@ -9,6 +9,6 @@ class Specialty extends Model
     // $specialty->users
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)->withTimestamps();
     }
 }

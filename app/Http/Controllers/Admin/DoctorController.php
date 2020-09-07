@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Specialty;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,7 +19,7 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctors = User::doctors()->paginate(8);
+        $doctors = User::doctors()->paginate(5);
         return view('doctors.index', compact('doctors'));
     }
 
@@ -29,7 +30,8 @@ class DoctorController extends Controller
      */
     public function create()
     {
-        return view('doctors.create');
+        $specialties = Specialty::all();
+        return view('doctors.create', compact('specialties'));
     }
 
     /**
@@ -40,16 +42,19 @@ class DoctorController extends Controller
      */
     public function store(Request $request)
     {
+//        dd($request->all());
         $this->performValidation($request);
 
         // mass assignment
-        DB::table('users')->insert(
+        $user = User::create(
             $request->only('name', 'email', 'dni', 'address', 'phone')
             + [
                 'role' => 'doctor',
                 'password' => Hash::make($request->input('password'))
             ]
         );
+
+        $user->specialties()->attach($request->input('specialties'));
 
         $notification = 'el medico se ha registrado correctamente.';
         return redirect('/doctors')->with(compact('notification'));
@@ -74,8 +79,10 @@ class DoctorController extends Controller
      */
     public function edit($id)
     {
-        $doctor = User::doctors()->findOrFail($id);
-        return view('doctors.edit', compact('doctor'));
+        $doctor = User::doctors()->findOrFail($id); //busca un doctor por id, si no lo consigue devuelve un error 404
+        $specialties = Specialty::all();
+        $specialty_ids = $doctor->specialties()->pluck('specialties.id');
+        return view('doctors.edit', compact('doctor', 'specialties', 'specialty_ids'));
     }
 
     /**
@@ -97,6 +104,8 @@ class DoctorController extends Controller
 
         $user->fill($data); //llenar
         $user->save(); // UPDATE
+
+        $user->specialties()->sync($request->input('specialties'));
 
         $notification = 'la informacion del medico se ha actualizado correctamente.';
         return redirect('/doctors')->with(compact('notification'));
