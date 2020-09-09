@@ -24,23 +24,32 @@
                     </div>
                 </ul>
             @endif
-            <form action="{{ url('patients') }}" method="POST">
+            <form action="{{ url('appointments') }}" method="POST">
                 @csrf
 
                 <div class="form-group">
-                    <label for="specialty">Especialidad:</label>
-                    <select name="specialty_id" id="specialty" class="form-control" required>
-                        <option value="">Seleccionar especialidad</option>
-                        @foreach($specialties as $specialty)
-                            <option value="{{ $specialty->id }}">{{ $specialty->name }}</option>
-                        @endforeach
-                    </select>
+                    <label for="description">Descripcion</label>
+                    <input name="description" id="description" value="{{ old('description') }}" type="text" class="form-control" placeholder="Describe brevemente la consulta" required>
                 </div>
-                <div class="form-group">
-                    <label for="email">Medico:</label>
-                    <select name="doctor_id" id="doctor" class="form-control">
-                        {{--los doctores se cargan por AJAX--}}
-                    </select>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="specialty">Especialidad:</label>
+                        <select name="specialty_id" id="specialty" class="form-control" required>
+                            <option value="">Seleccionar especialidad</option>
+                            @foreach($specialties as $specialty)
+                                <option value="{{ $specialty->id }}" @if(old('specialty_id') == $specialty->id) selected @endif>{{ $specialty->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="email">Medico:</label>
+                        <select name="doctor_id" id="doctor" class="form-control" required>
+                            @foreach($doctors as $doctor)
+                                <option value="{{ $doctor->id }}" @if(old('doctor_id') == $doctor->id) selected @endif>{{ $doctor->name }}</option>
+                            @endforeach
+                            {{--los doctores se cargan por AJAX--}}
+                        </select>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="dni">Fecha:</label>
@@ -48,8 +57,9 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                         </div>
-                        <input name="date" class="form-control datepicker" placeholder="Seleccionar fecha"
-                               id="date" type="text" value="{{ date('Y-m-d') }}"
+                        <input name="schedule_date" class="form-control datepicker" placeholder="Seleccionar fecha"
+                               id="date" type="text"
+                               value="{{ old('schedule_date', date('Y-m-d')) }}"
                                data-date-format="yyyy-mm-dd"
                                data-date-start-date="{{ date('Y-m-d') }}"
                                data-date-end-date="+30d">
@@ -58,13 +68,36 @@
                 <div class="form-group">
                     <label for="address">Hora de atencion:</label>
                     <div id="hours">
+                        @if($intervals)
+                            @foreach($intervals['morning'] as $interval)
 
+                            @endforeach
+                        @else
+                            <div class="alert alert-primary" role="alert">
+                                Selecciona un Medico y una fecha, para ver sus horas disponibles.
+                            </div>
+                            {{--las horas de atencion se cargan por AJAX--}}
+                        @endif
                     </div>
 {{--                    <input type="text" name="address" class="form-control" placeholder="direccion" value="{{ old('address') }}">--}}
                 </div>
                 <div class="form-group">
-                    <label for="phone">Telefono / movil:</label>
-                    <input type="text" name="phone" class="form-control" placeholder="telefono" value="{{ old('phone') }}">
+                    <label for="phone">Tipo de consulta:</label>
+                    <div class="custom-control custom-radio mb-3">
+                        <input type="radio" id="type1" name="type" class="custom-control-input"
+                               @if(old('type', 'Consulta') == 'Consulta') checked @endif value="Consulta">
+                        <label class="custom-control-label" for="type1">Consulta</label>
+                    </div>
+                    <div class="custom-control custom-radio mb-3">
+                        <input type="radio" id="type2" name="type" class="custom-control-input"
+                               @if(old('type') == 'Examen') checked @endif value="Examen">
+                        <label class="custom-control-label" for="type2">Examen</label>
+                    </div>
+                    <div class="custom-control custom-radio mb-3">
+                        <input type="radio" id="type3" name="type" class="custom-control-input"
+                               @if(old('type') == 'Operacion') checked @endif value="Operacion">
+                        <label class="custom-control-label" for="type3">Operacion</label>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </form>

@@ -41,6 +41,7 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('1234'),
             'role' => 'doctor'
         ]);
-        factory(User::class, 50)->create();
+//        factory(User::class, 50)->create();
+        factory(User::class, 50)->state('patient')->create();
     }
 }
