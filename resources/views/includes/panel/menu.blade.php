@@ -38,7 +38,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('patients') }}">
+            <a class="nav-link" href="{{ url('appointments') }}">
                 <i class="ni ni-time-alarm text-primary"></i> Mis Citas
             </a>
         </li>
@@ -54,7 +54,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{ url('patients') }}">
+            <a class="nav-link" href="{{ url('appointments') }}">
                 <i class="ni ni-time-alarm text-primary"></i> Mis Citas
             </a>
         </li>

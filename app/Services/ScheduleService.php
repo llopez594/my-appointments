@@ -1,19 +1,20 @@
 <?php namespace App\Services;
 
+use App\Appointment;
 use App\Interfaces\ScheduleServiceInterface;
 use App\WorkDay;
 use Carbon\Carbon;
 
 class ScheduleService implements ScheduleServiceInterface
 {
-    private function getDayfromDate($date)
+    public function isAvailableInterval($date, $doctorId, Carbon $start)
     {
-        $dateCarbon = new Carbon($date);
+        $exists = Appointment::where('doctor_id', $doctorId)
+            ->where('schedule_date', $date)
+            ->where('scheduled_time', $start->format('H:i:s'))
+            ->exists();
 
-        $dayCarbon = $dateCarbon->dayOfWeek;
-        $day = (($dayCarbon == 0) ? 6 : $dayCarbon-1);
-
-        return $day;
+        return !$exists; // available id already none exists.
     }
 
     public function getAvailableIntervals($date, $doctorId)
@@ -31,19 +32,32 @@ class ScheduleService implements ScheduleServiceInterface
         }
 
         $morningIntervals = $this->getIntervals(
-            $workDay->morning_start, $workDay->morning_end
+            $workDay->morning_start, $workDay->morning_end,
+            $date, $doctorId
         );
 
         $afternoonIntervals = $this->getIntervals(
-            $workDay->afternoon_start, $workDay->afternoon_end
+            $workDay->afternoon_start, $workDay->afternoon_end,
+            $date, $doctorId
         );
 
         $data = [];
         $data['morning'] = $morningIntervals;
         $data['afternoon'] = $afternoonIntervals;
+        return $data;
     }
 
-    private function getIntervals($start, $end)
+    private function getDayfromDate($date)
+    {
+        $dateCarbon = new Carbon($date);
+
+        $dayCarbon = $dateCarbon->dayOfWeek;
+        $day = (($dayCarbon == 0) ? 6 : $dayCarbon-1);
+
+        return $day;
+    }
+
+    private function getIntervals($start, $end, $date, $doctorId)
     {
         $start = new Carbon($start);
         $end   = new Carbon($end);
@@ -52,10 +66,17 @@ class ScheduleService implements ScheduleServiceInterface
         while($start < $end) {
             $interval = [];
             $interval['start'] = $start->format('g:i A');
+
+            //evalua si existe una hora reservada para un medico.
+            $available = $this->isAvailableInterval($date, $doctorId, $start);
+
             $start->addMinutes(30);
             $interval['end'] = $start->format('g:i A');
 
-            $intervals []= $interval;
+
+            if($available){
+                $intervals []= $interval;
+            }
         }
         return $intervals;
     }

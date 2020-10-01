@@ -35,7 +35,6 @@ class CreateAppointmentsTable extends Migration
 
             $table->string('type');
 
-
             $table->timestamps();
         });
     }
