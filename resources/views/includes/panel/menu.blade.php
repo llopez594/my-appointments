@@ -5,66 +5,9 @@
     Menu
 @endif
 <ul class="navbar-nav">
-    @if(Auth::user()->role == 'admin')
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('/home') }}">
-                <i class="ni ni-tv-2 text-red"></i> Dashboard
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('specialties') }}">
-                <i class="ni ni-planet text-blue"></i> Especialidades
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('doctors') }}">
-                <i class="ni ni-pin-3 text-orange"></i> Medicos
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('patients') }}">
-                <i class="ni ni-satisfied text-info"></i> Pacientes
-            </a>
-        </li>
-    @elseif(Auth::user()->role == 'doctor')
-        {{--<li class="nav-item">
-            <a class="nav-link" href="{{ url('/home') }}">
-                <i class="ni ni-tv-2 text-red"></i> Dashboard
-            </a>
-        </li>--}}
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('schedule') }}">
-                <i class="ni ni-calendar-grid-58 text-danger"></i> Gestionar horario
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('appointments') }}">
-                <i class="ni ni-time-alarm text-primary"></i> Mis Citas
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('patients') }}">
-                <i class="ni ni-satisfied text-info"></i> Mis Pacientes
-            </a>
-        </li>
-    @else {{-- patients --}}
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('appointments/create') }}">
-                <i class="ni ni-send text-danger"></i> Reservar citas
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ url('appointments') }}">
-                <i class="ni ni-time-alarm text-primary"></i> Mis Citas
-            </a>
-        </li>
-    @endif
-
-    {{--<li class="nav-item">
-        <a class="nav-link" href="./examples/tables.html">
-            <i class="ni ni-bullet-list-67 text-red"></i> Horarios
-        </a>
-    </li>--}}
+    @include(
+    'includes.panel.menu.' . Auth::user()->role
+    )
     <li class="nav-item">
         <a class="nav-link" href="{{ route('logout') }}"
            onclick="event.preventDefault();
