@@ -33,6 +33,11 @@ Route::middleware(['auth', 'admin'])->namespace('Admin')->group(function () {
 
     // Patients
     Route::resource('patients', 'PatientController');
+
+    //Charts
+    Route::get('/charts/appointments/line', 'ChartController@appointments');
+    Route::get('/charts/doctors/column', 'ChartController@doctors');
+    Route::get('/charts/doctors/column/data', 'ChartController@doctorsJson');
 });
 
 Route::middleware(['auth', 'doctor'])->namespace('Doctor')->group(function () {

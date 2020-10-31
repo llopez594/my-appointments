@@ -14,7 +14,8 @@ class Appointment extends Model
         'patient_id',
         'schedule_date',
         'scheduled_time',
-        'type'
+        'type',
+        'status'
     ];
 
     // N $appointment->specialty 1
