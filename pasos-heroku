@@ -1,7 +1,19 @@
+/** crear dos archivos en la raiz del proyecto **/
+
+1ro un archivo sin extensino llamado Procfile
+contenido= web: vendor/bin/heroku-php-apache2 -C apache.conf public/
+
+2do un archivo llamado apache.conf
+contenido= DirectoryIndex index.php
+
+
+/** luego comenzar con los comando de terminal desde la raiz del proyecto **/
+
+heroku login (abrira el navegador para iniciar sesion)
 git init .
 git add .
 git commit -m "commit initial"
-
+heroku create
 git push heroku master
 php artisan key:generate --show
-heroku config:set APP_KEY=xxxx
+heroku config:set APP_KEY= xxxxCODE GENERATEDxxxx
