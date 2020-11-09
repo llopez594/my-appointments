@@ -1,0 +1,7 @@
+git init .
+git add .
+git commit -m "commit initial"
+
+git push heroku master
+php artisan key:generate --show
+heroku config:set APP_KEY=xxxx

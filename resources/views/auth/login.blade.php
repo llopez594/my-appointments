@@ -1,6 +1,6 @@
 @extends('layouts.form')
 
-@section('title', 'Inicio de sesion')
+@section('title', 'Inicio de sesion heroku')
 @section('subtitle', 'Ingresa tus datos para iniciar sesion')
 
 @section('content')
