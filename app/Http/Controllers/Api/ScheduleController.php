@@ -25,11 +25,6 @@ class ScheduleController extends Controller
             'date' => 'required|date_format:"Y-m-d"',
             'doctor_id' => 'required|exists:users,id'
         ];
-        /*$messages = [
-            'name.required' => 'Es necesario ingresar un nombre',
-            'name.min' => 'Como minimo el nombre debe tener 3 caracteres.'
-
-        ];*/
-        $this->validate($request, $rules/*, $messages*/);
+        $this->validate($request, $rules);
     }
 }
