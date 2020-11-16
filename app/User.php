@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -28,6 +28,22 @@ class User extends Authenticatable
         'password', 'remember_token', 'pivot',
         "email_verified_at", "created_at", "updated_at"
     ];
+
+    public static $rules = [
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'string', 'min:8', 'confirmed']
+    ];
+
+    public static function createPatient(array $data)
+    {
+        return self::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'role' => 'patient'
+        ]);
+    }
 
     /**
      * The attributes that should be cast to native types.

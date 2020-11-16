@@ -12,6 +12,7 @@
 */
 
 Route::post('/login', 'AuthController@login');
+Route::post('/register', 'AuthController@register');
 
 
 //Public resources
@@ -24,6 +25,7 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/user', 'UserController@show');
     Route::post('/logout', 'AuthController@logout');
 
-    //post appointment
-
+    // appointments
+    Route::get('/appointments', 'AppointmentController@index');
+    Route::post('/appointments', 'AppointmentController@store');
 });
