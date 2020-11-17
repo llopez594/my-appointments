@@ -56,17 +56,13 @@
                                 <i class="ni ni-check-bold"></i>
                             </button>
                         </form>
-                        <a class="btn btn-danger btn-sm" href="{{ url('/appointments/'.$appointment->id.'/cancel') }}">
-                            <i class="ni ni-fat-delete"></i>
-                        </a>
-                    @else
-                        <form action="{{ url('appointments/'.$appointment->id.'/cancel') }}" method="POST" class="d-inline-block">
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm" title="Cancelar cita" data-toggle="tooltip" data-placement="top">
-                                <i class="ni ni-fat-delete"></i>
-                            </button>
-                        </form>
                     @endif
+                    <form action="{{ url('appointments/'.$appointment->id.'/cancel') }}" method="POST" class="d-inline-block">
+                        @csrf
+                        <button type="submit" class="btn btn-danger btn-sm" title="Cancelar cita" data-toggle="tooltip" data-placement="top">
+                            <i class="ni ni-fat-delete"></i>
+                        </button>
+                    </form>
 
                 </td>
             </tr>

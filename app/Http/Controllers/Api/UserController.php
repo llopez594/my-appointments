@@ -12,4 +12,15 @@ class UserController extends Controller
     {
         return $user = Auth::guard('api')->user();
     }
+
+    public function update(Request $request)
+    {
+        $user = Auth::guard('api')->user();
+        $user->name = $request->name; // $request->input('name')
+        $user->phone = $request->phone;
+        $user->address = $request->address;
+        $user->save();
+
+        JwtAuth::clearCache($user);
+    }
 }
